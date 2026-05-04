@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-family-base: 'Heebo', system-ui, sans-serif;
+
+  --color-sidebar: #0c1827;
+  --color-sidebar-hover: #162436;
+  --color-sidebar-active: #1a2e44;
+  --color-brand-orange: #f97316;
+  --color-brand-red: #dc2626;
+  --color-brand-blue: #1e40af;
+
+  --color-present: #16a34a;
+  --color-absent: #dc2626;
+  --color-late: #d97706;
+  --color-sick: #7c3aed;
+  --color-not-participating: #6b7280;
+}
+
+* {
+  font-family: 'Heebo', system-ui, sans-serif;
+}
+
+body {
+  direction: rtl;
+  background-color: #f0f4f8;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Disable transition on page load */
+.no-transition * {
+  transition: none !important;
+}
+
+/* Attendance button active state animation */
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+.btn-pop:active {
+  animation: pop 0.15s ease;
+}
+
+/* Pulse animation for saving state */
+@keyframes saving-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.saving {
+  animation: saving-pulse 1s ease infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Donut chart animation */
+@keyframes donut-fill {
+  from { stroke-dashoffset: 251.2; }
+}
+
+/* Page enter transition */
+.page-enter {
+  animation: fadeIn 0.25s ease forwards;
+}
