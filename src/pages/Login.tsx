@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/supabase'
 import { Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react'
 
 export default function Login() {
@@ -8,9 +9,20 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { signIn } = useAuth()
   const navigate = useNavigate()
+
+  const handleGoogle = async () => {
+    setGoogleLoading(true)
+    setError(null)
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    })
+    if (err) { setError('שגיאה בכניסה עם Google'); setGoogleLoading(false) }
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -113,6 +125,31 @@ export default function Login() {
                 {loading ? 'מתחבר...' : 'כניסה למערכת'}
               </button>
             </form>
+
+            <div className="flex items-center gap-3 my-5">
+              <div className="flex-1 h-px bg-gray-100" />
+              <span className="text-xs text-gray-300">או</span>
+              <div className="flex-1 h-px bg-gray-100" />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGoogle}
+              disabled={googleLoading}
+              className="w-full py-3 px-6 rounded-xl font-semibold text-gray-700 text-sm border border-gray-200 bg-white hover:bg-gray-50 transition-all disabled:opacity-60 flex items-center justify-center gap-2.5 shadow-sm"
+            >
+              {googleLoading ? (
+                <Loader2 size={16} className="animate-spin text-gray-400" />
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 18 18">
+                  <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+                  <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+                  <path fill="#FBBC05" d="M4.5 10.48A4.8 4.8 0 0 1 4.5 7.5V5.43H1.83a8 8 0 0 0 0 7.14z"/>
+                  <path fill="#EA4335" d="M8.98 3.58c1.32 0 2.5.45 3.44 1.35l2.54-2.54A8 8 0 0 0 1.83 5.44L4.5 7.5c.69-2.06 2.61-3.92 4.48-3.92z"/>
+                </svg>
+              )}
+              {googleLoading ? 'מתחבר...' : 'כניסה עם Google'}
+            </button>
           </div>
 
           <p className="text-center text-xs text-gray-400 mt-6">

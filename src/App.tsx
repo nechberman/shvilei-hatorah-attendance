@@ -11,6 +11,7 @@ import MedicalTreatment from './pages/MedicalTreatment'
 import Students from './pages/Students'
 import StudentProfile from './pages/StudentProfile'
 import StaffManagement from './pages/StaffManagement'
+import ClassManagement from './pages/ClassManagement'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -63,6 +64,7 @@ function AppRoutes() {
         <Route path="students" element={<Students />} />
         <Route path="students/:id" element={<StudentProfile />} />
         <Route path="staff" element={<AdminRoute><StaffManagement /></AdminRoute>} />
+        <Route path="classes" element={<AdminRoute><ClassManagement /></AdminRoute>} />
       </Route>
     </Routes>
   )

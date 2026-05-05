@@ -22,11 +22,11 @@ function getInitials(name: string) {
 
 interface AvatarProps {
   name: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   className?: string
 }
 
-const sizeMap = { sm: 'w-7 h-7 text-xs', md: 'w-9 h-9 text-sm', lg: 'w-12 h-12 text-base' }
+const sizeMap = { xs: 'w-5 h-5 text-[10px]', sm: 'w-7 h-7 text-xs', md: 'w-9 h-9 text-sm', lg: 'w-12 h-12 text-base' }
 
 export default function Avatar({ name, size = 'md', className }: AvatarProps) {
   return (

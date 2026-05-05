@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, CalendarCheck, BarChart3, FileText,
-  Pill, Users, UserCog, LogOut, ChevronLeft,
+  Pill, Users, UserCog, LogOut, ChevronLeft, School,
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { ROLE_LABELS } from '../../types'
@@ -13,6 +13,7 @@ const navItems = [
   { to: '/weekly-report', label: 'דיווח שבועי', icon: FileText, adminOnly: false, canSeeAllOnly: true },
   { to: '/medical', label: 'טיפול תרופתי', icon: Pill },
   { to: '/students', label: 'רשימת תלמידים', icon: Users },
+  { to: '/classes', label: 'ניהול כיתות', icon: School, adminOnly: true },
   { to: '/staff', label: 'ניהול צוות', icon: UserCog, adminOnly: true },
 ]
 

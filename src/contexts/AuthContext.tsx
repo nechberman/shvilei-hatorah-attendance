@@ -10,6 +10,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
   isAdmin: boolean
+  canEdit: boolean
   canSeeAll: boolean
   myClassIds: string[]
   myMorningClassIds: string[]
@@ -92,7 +93,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const isAdmin = staff?.role === 'principal'
-  const canSeeAll = ['principal', 'vice_principal', 'counselor'].includes(staff?.role ?? '')
+  const canEdit = ['principal', 'rabbi'].includes(staff?.role ?? '')
+  const canSeeAll = ['principal', 'rabbi', 'vice_principal', 'counselor'].includes(staff?.role ?? '')
 
   const myMorningClassIds = staff?.assignments
     ?.filter(a => a.session === 'morning')
@@ -107,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider value={{
       user, staff, loading, signIn, signOut,
-      isAdmin, canSeeAll,
+      isAdmin, canEdit, canSeeAll,
       myClassIds, myMorningClassIds, myAfternoonClassIds,
       refreshStaff,
     }}>

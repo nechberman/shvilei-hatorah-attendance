@@ -1,4 +1,4 @@
-export type UserRole = 'principal' | 'vice_principal' | 'counselor' | 'teacher'
+export type UserRole = 'principal' | 'rabbi' | 'vice_principal' | 'counselor' | 'teacher'
 export type AttendanceSession = 'prayer' | 'morning' | 'afternoon'
 export type AttendanceStatus = 'present' | 'absent' | 'late' | 'sick' | 'not_participating'
 
@@ -6,6 +6,7 @@ export interface StaffMember {
   id: string
   full_name: string
   email: string
+  secondary_email: string | null
   phone: string | null
   role: UserRole
   is_active: boolean
@@ -44,6 +45,7 @@ export interface Student {
   city: string | null
   address: string | null
   drive_folder_url: string | null
+  dormitory: string | null
   is_active: boolean
   created_at: string
 }
@@ -109,6 +111,7 @@ export const SESSION_LABELS: Record<AttendanceSession, string> = {
 
 export const ROLE_LABELS: Record<UserRole, string> = {
   principal: 'מנהל',
+  rabbi: 'רב',
   vice_principal: 'סגן מנהל',
   counselor: 'יועצת',
   teacher: 'מורה',

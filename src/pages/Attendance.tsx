@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useHebrewDate } from '../hooks/useHebrewDate'
 import { ChevronRight, ChevronLeft, CalendarCheck, Filter } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -122,8 +123,10 @@ export default function Attendance() {
     setDate(d.toISOString().split('T')[0])
   }
 
-  const dateLabel = new Intl.DateTimeFormat('he-IL', { dateStyle: 'full' }).format(new Date(date + 'T12:00:00'))
-  const hebrewDate = new Intl.DateTimeFormat('he-IL-u-ca-hebrew', { dateStyle: 'long' }).format(new Date(date + 'T12:00:00'))
+  const hebrewDate = useHebrewDate(date)
+  const dateLabel = new Intl.DateTimeFormat('he-IL', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  }).format(new Date(date + 'T12:00:00'))
 
   const presentCount = Object.values(attendance).filter(a =>
     Object.values(a).some(s => s === 'present')
